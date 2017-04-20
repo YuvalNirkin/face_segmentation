@@ -3,6 +3,7 @@ set(doxyfile "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile")
 set(DOXYGEN_INPUT_PATH "\"${CMAKE_SOURCE_DIR}/face_seg/face_seg\"")
 set(DOXYGEN_OUTPUT_PATH "\"${CMAKE_CURRENT_BINARY_DIR}/doxygen\"")
 set(DOXYGEN_PROJECT_NAME "\"Nirkin Face Segmentation\"")
+set(DOXYGEN_PROJECT_NUMBER ${FACE_SEG_VERSION})
 set(DOXYGEN_PROJECT_BRIEF "\"Deep face segmentation based on fully connected convolutional neural network.\"")
 
 # Write doxygen configuration file

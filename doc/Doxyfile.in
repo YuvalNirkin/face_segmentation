@@ -3,7 +3,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = @DOXYGEN_PROJECT_NAME@
-PROJECT_NUMBER         = @NIRKIN_FACE_VERSION@
+PROJECT_NUMBER         = @DOXYGEN_PROJECT_NUMBER@
 PROJECT_BRIEF          = @DOXYGEN_PROJECT_BRIEF@
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included

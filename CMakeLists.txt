@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.4)
-project(face_seg)
+project(face_segmentation)
 
 # Set version
 set(FACE_SEG_MAJOR_VERSION 0)
@@ -86,15 +86,15 @@ export(TARGETS ${FACE_SEG_TARGETS}
 export(PACKAGE face_seg)
 	 
 # Create config files
-configure_file(cmake/face_seg-config.cmake.in
-  "${PROJECT_BINARY_DIR}/face_seg-config.cmake" @ONLY)
-configure_file(cmake/face_seg-config-version.cmake.in
-  "${PROJECT_BINARY_DIR}/face_seg-config-version.cmake" @ONLY)
+configure_file(cmake/face_segmentation-config.cmake.in
+  "${PROJECT_BINARY_DIR}/face_segmentation-config.cmake" @ONLY)
+configure_file(cmake/face_segmentation-config-version.cmake.in
+  "${PROJECT_BINARY_DIR}/face_segmentation-config-version.cmake" @ONLY)
   
 # Install config files
 install(FILES
-  "${PROJECT_BINARY_DIR}/face_seg-config.cmake"
-  "${PROJECT_BINARY_DIR}/face_seg-config-version.cmake"
+  "${PROJECT_BINARY_DIR}/face_segmentation-config.cmake"
+  "${PROJECT_BINARY_DIR}/face_segmentation-config-version.cmake"
   DESTINATION "cmake" COMPONENT dev)
   
 # Install the export set for use with the install-tree

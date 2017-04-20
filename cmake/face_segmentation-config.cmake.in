@@ -1,0 +1,20 @@
+# - Config file for the face_segmentation package
+# It defines the following variables
+#  face_segmentation_INCLUDE_DIRS - include directories for face_segmentation
+#  face_segmentation_LIBRARIES    - libraries to link against
+#  face_segmentation_EXECUTABLE   - the face_segmentation executable
+ 
+# Calculated paths
+get_filename_component(face_segmentation_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
+set(face_segmentation_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/include")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET face_seg AND NOT face_seg_BINARY_DIR)
+  include("${face_segmentation_CMAKE_DIR}/face_seg-targets.cmake")
+endif()
+ 
+# These are IMPORTED targets created by face_seg-targets.cmake
+set(face_segmentation_LIBRARIES face_seg)
+if(TARGET face_seg_image)
+	set(face_segmentation_EXECUTABLE face_seg_image)
+endif()

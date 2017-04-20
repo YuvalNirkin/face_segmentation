@@ -64,7 +64,7 @@ add_subdirectory(face_seg_image)
 add_subdirectory(face_seg_batch)
 
 # Interfaces
-if(BUILD_INTERFACE_MATLAB)
+if(BUILD_INTERFACE_PYTHON)
 	add_subdirectory(interfaces/python)
 endif()
 
@@ -99,3 +99,7 @@ install(FILES
   
 # Install the export set for use with the install-tree
 install(EXPORT face_seg-targets DESTINATION cmake COMPONENT dev)
+
+# Install sample data
+file(GLOB SAMPLE_IMAGES "data/images/*.jpg")
+install(FILES ${SAMPLE_IMAGES} DESTINATION data/images)

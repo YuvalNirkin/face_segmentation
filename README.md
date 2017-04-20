@@ -19,6 +19,7 @@ The network was trained on IARPA Janus CS2 dataset (excluding subjects that are 
 ## Installation
 - Use CMake and your favorite compiler to build and install the library.
 - Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/0.9/face_seg_fcn8s.zip) and extract to "data" in the installation directory.
+- Add "bin" in the installation directory to path.
 
 ## Usage
 - For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/face_segmentation/).

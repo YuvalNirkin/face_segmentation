@@ -32,3 +32,14 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 ```DOS .bat
 python face_seg.py
 ```
+
+## Related projects
+- [End-to-end, automatic face swapping pipeline](https://github.com/YuvalNirkin/face_swap), example application using out face segmentation method.
+- [Interactive system for fast face segmentation ground truth labeling](https://github.com/YuvalNirkin/face_video_segment), used to produce the training set for our deep face segmentation.
+- [CNN3DMM](http://www.openu.ac.il/home/hassner/projects/CNN3DMM/), estimation of 3D face shapes from single images.
+- [ResFace101](http://www.openu.ac.il/home/hassner/projects/augmented_faces/), deep face recognition used in the paper to test face swapping capabilities. 
+
+## Copyright
+Copyright 2017, Yuval Nirkin, Iacopo Masi, Anh Tuan Tran, Tal Hassner, and Gerard Medioni 
+
+The SOFTWARE provided in this page is provided "as is", without any guarantee made as to its suitability or fitness for any particular use. It may contain bugs, so use of this tool is at your own risk. We take no responsibility for any damage of any sort that may unintentionally be caused through its use.

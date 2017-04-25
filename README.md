@@ -33,7 +33,7 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 python face_seg.py
 ```
 ## Important note
-In our paper we used a different network for our face segmentation. In the process of converting it to the Caffe model used in our end-to-end face swap distribution we notices some performance drop. We are working to fix this. We therefore ask that you please check here soon for updated on this Caffe model. 
+In our paper we used a different network for our face segmentation. In the process of converting it to the Caffe model used in our [end-to-end face swap distribution](https://github.com/YuvalNirkin/face_swap) we notices some performance drop. We are working to fix this. We therefore ask that you please check here soon for updated on this Caffe model. 
 
 
 ## Related projects

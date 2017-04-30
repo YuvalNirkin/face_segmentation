@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
         }
 
         // Read config file
-        ifstream ifs(vm["cfg"].as<string>());
+        std::ifstream ifs(vm["cfg"].as<string>());
         store(parse_config_file(ifs, desc), vm);
 
         notify(vm);
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
             // Write rendered image
 			cv::Mat debug_render_img = source_img.clone();
 			face_seg::renderSegmentationBlend(debug_render_img, seg);
-            string debug_render_path = (path(outputPath) /=
+            string debug_render_path = (path(filePath).parent_path() /=
                 (path(filePath).stem() += "_debug.jpg")).string();
             cv::imwrite(debug_render_path, debug_render_img);
         }

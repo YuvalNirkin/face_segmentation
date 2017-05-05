@@ -75,9 +75,8 @@ int main(int argc, char* argv[])
 {
 	// Parse command line arguments
     string inputPath;
-	string outputPath, caffeModelPath, deployPath;
-    string logPath;
-    string cfgPath;
+	string outputPath, modelPath, deployPath;
+    string logPath, cfgPath;
     unsigned int verbose;
 	try {
 		options_description desc("Allowed options");
@@ -86,7 +85,7 @@ int main(int argc, char* argv[])
             ("verbose,v", value<unsigned int>(&verbose)->default_value(0), "output debug information")
             ("input,i", value<string>(&inputPath)->required(), "path to input directory or image list")
             ("output,o", value<string>(&outputPath)->required(), "output directory")
-            ("caffemodel,c", value<string>(&caffeModelPath)->required(), "path to caffe model file")
+            ("model,c", value<string>(&modelPath)->required(), "path to network weights model file  (.caffemodel)")
             ("deploy,d", value<string>(&deployPath)->required(), "path to deploy prototxt file")
             ("log", value<string>(&logPath)->default_value("face_seg_batch_log.csv"), "log file path")
             ("cfg", value<string>(&cfgPath)->default_value("face_seg_batch.cfg"), "configuration file (.cfg)")
@@ -111,7 +110,7 @@ int main(int argc, char* argv[])
             throw error("input must be a path to input directory or image pairs list!");
         if (!is_directory(outputPath))
             throw error("output must be a path to a directory!");
-        if (!is_regular_file(caffeModelPath)) throw error("caffemodel must be a path to a file!");
+        if (!is_regular_file(modelPath)) throw error("model must be a path to a file!");
         if (!is_regular_file(deployPath)) throw error("deploy must be a path to a file!");
 	}
 	catch (const error& e) {
@@ -134,7 +133,7 @@ int main(int argc, char* argv[])
         else readImageListFromFile(inputPath, img_paths);
 
 		// Initialize face segmentation
-		face_seg::FaceSeg fs(deployPath, caffeModelPath);
+		face_seg::FaceSeg fs(deployPath, modelPath);
         
         // For each image
         string prev_src_path, prev_tgt_path;

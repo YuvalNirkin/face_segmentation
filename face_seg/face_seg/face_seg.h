@@ -12,7 +12,7 @@
 
 namespace face_seg
 {
-	/**	This class provided face segmentation using Caffe with a fully connected
+	/**	This class provided deep face segmentation using Caffe with a fully connected
 		convolutional neural network.
 	*/
     class FaceSeg
@@ -20,11 +20,11 @@ namespace face_seg
     public:
 		/**	Construct FaceSeg instance.
 			@param deploy_file Network definition file for deployment (.prototxt).
-			@param deploy_file Network weights model file (.caffemodel).
+			@param model_file Network weights model file (.caffemodel).
 			@param with_gpu Toggle GPU\CPU.
 			@param gpu_device_id Set the GPU's device id.
 		*/
-		FaceSeg(const std::string& deploy_file, const std::string& caffe_model_file,
+		FaceSeg(const std::string& deploy_file, const std::string& model_file,
             bool with_gpu = true, int gpu_device_id = 0);
 
         ~FaceSeg();

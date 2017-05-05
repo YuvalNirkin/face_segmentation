@@ -8,7 +8,7 @@ using namespace caffe;
 namespace face_seg
 {
 
-	FaceSeg::FaceSeg(const string& deploy_file, const string& caffe_model_file,
+	FaceSeg::FaceSeg(const string& deploy_file, const string& model_file,
 		bool with_gpu, int gpu_device_id) :
 		m_num_channels(0), m_with_gpu(with_gpu)
 	{
@@ -21,7 +21,7 @@ namespace face_seg
 
 		// Load the network
 		m_net.reset(new Net<float>(deploy_file, caffe::TEST));
-		m_net->CopyTrainedLayersFrom(caffe_model_file);
+		m_net->CopyTrainedLayersFrom(model_file);
 
 		CHECK_EQ(m_net->num_inputs(), 1) << "Network should have exactly one input.";
 		CHECK_EQ(m_net->num_outputs(), 1) << "Network should have exactly one output.";

@@ -35,17 +35,17 @@ python face_seg.py
 - For running the segmentation on a single image:
 ```DOS .bat
 cd path/to/face_segmentation/bin
-face_seg_image ../data/images/Alison_Lohman_0001.jpg -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+face_seg_image ../data/images/Alison_Lohman_0001.jpg -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```
 - For running the segmentation on a all the images in a directory:
 ```DOS .bat
 cd path/to/face_segmentation/bin
-face_seg_batch ../data/images -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+face_seg_batch ../data/images -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```
 - For running the segmentation on a list of images, first prepare a file "img_list.txt", in which each line is a path to an image and call the following command:
 ```DOS .bat
 cd path/to/face_segmentation/bin
-face_seg_batch img_list.txt -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+face_seg_batch img_list.txt -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```
 
 ## Important note

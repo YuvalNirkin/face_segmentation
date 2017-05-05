@@ -32,6 +32,22 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 ```DOS .bat
 python face_seg.py
 ```
+- For running the segmentation on a single image:
+```DOS .bat
+cd path/to/face_segmentation/bin
+face_seg_image ../data/images/Alison_Lohman_0001.jpg -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+```
+- For running the segmentation on a all the images in a directory:
+```DOS .bat
+cd path/to/face_segmentation/bin
+face_seg_batch ../data/images -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+```
+- For running the segmentation on a list of images, first prepare a file "img_list.txt", in which each line is a path to an image and call the following command:
+```DOS .bat
+cd path/to/face_segmentation/bin
+face_seg_batch img_list.txt -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+```
+
 ## Important note
 In our paper we used a different network for our face segmentation. In the process of converting it to the Caffe model used in our [end-to-end face swap distribution](https://github.com/YuvalNirkin/face_swap) we notices some performance drop. We are working to fix this. We therefore ask that you please check here soon for updated on this Caffe model. 
 

@@ -1,3 +1,9 @@
+# Validation
+if(NOT Boost_FOUND)
+	message(STATUS "face_seg_image won't be built because Boost is missing.")
+	return()
+endif()
+
 # Target
 add_executable(face_seg_image face_seg_image.cpp)
 target_include_directories(face_seg_image PRIVATE 

@@ -44,7 +44,7 @@ if(WIN32)
 		add_definitions(-DBOOST_ALL_DYN_LINK)
 	endif()
 endif()
-find_package(Boost REQUIRED filesystem program_options regex timer)
+find_package(Boost COMPONENTS filesystem program_options regex timer)
 
 # OpenCV
 find_package(OpenCV REQUIRED highgui imgproc imgcodecs calib3d photo)

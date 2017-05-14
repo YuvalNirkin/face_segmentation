@@ -17,7 +17,7 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 ## Dependencies
 | Library                                                            | Minimum Version | Notes                                    |
 |--------------------------------------------------------------------|-----------------|------------------------------------------|
-| [Boost](http://www.boost.org/)                                     | 1.47            |                                          |
+| [Boost](http://www.boost.org/)                                     | 1.47            |Optional - For command line tools         |
 | [OpenCV](http://opencv.org/)                                       | 3.0             |                                          |
 | [Caffe](https://github.com/BVLC/caffe)                             | 1.0             |☕️                                        |
 
@@ -29,21 +29,21 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 ## Usage
 - For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/face_segmentation/).
 - For python go to "interfaces/python" in the installation directory and run:
-```DOS .bat
+```BASH
 python face_seg.py
 ```
 - For running the segmentation on a single image:
-```DOS .bat
+```BASH
 cd path/to/face_segmentation/bin
 face_seg_image ../data/images/Alison_Lohman_0001.jpg -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```
-- For running the segmentation on a all the images in a directory:
-```DOS .bat
+- For running the segmentation on all the images in a directory:
+```BASH
 cd path/to/face_segmentation/bin
 face_seg_batch ../data/images -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```
 - For running the segmentation on a list of images, first prepare a file "img_list.txt", in which each line is a path to an image and call the following command:
-```DOS .bat
+```BASH
 cd path/to/face_segmentation/bin
 face_seg_batch img_list.txt -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```

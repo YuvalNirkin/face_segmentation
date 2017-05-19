@@ -1,5 +1,5 @@
 # Deep face segmentation in extremely hard conditions
-![alt text](https://yuvalnirkin.github.io/face_segmentation/images/face_segmentation_samples.jpg "Samples")  
+![alt text](https://yuvalnirkin.github.io/assets/img/projects/face_segmentation/face_segmentation_samples.jpg "Samples")  
 COFW sample images segmented using our method.
 
 [Yuval Nirkin](http://www.nirkin.com/), [Iacopo Masi](http://www-bcf.usc.edu/~iacopoma/), [Anh Tuan Tran](https://sites.google.com/site/anhttranusc/), [Tal Hassner](http://www.openu.ac.il/home/hassner/), and [Gerard Medioni](http://iris.usc.edu/people/medioni/index.html).
@@ -27,7 +27,7 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 - Add "bin" in the installation directory to path.
 
 ## Usage
-- For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/face_segmentation/).
+- For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/projects/face_segmentation/).
 - For python go to "interfaces/python" in the installation directory and run:
 ```BASH
 python face_seg.py

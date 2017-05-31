@@ -23,7 +23,7 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 
 ## Installation
 - Use CMake and your favorite compiler to build and install the library.
-- Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/0.9/face_seg_fcn8s.zip) and extract to "data" in the installation directory.
+- Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.0/face_seg_fcn8s.zip) and extract to "data" in the installation directory.
 - Add "bin" in the installation directory to path.
 
 ## Usage

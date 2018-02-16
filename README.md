@@ -1,5 +1,5 @@
 # Deep face segmentation in extremely hard conditions
-![alt text](https://yuvalnirkin.github.io/assets/img/projects/face_segmentation/face_segmentation_samples.jpg "Samples")  
+![alt text](https://yuvalnirkin.github.io/assets/img/projects/face_segmentation/face_segmentation_teaser.jpg "Samples")  
 COFW sample images segmented using our method.
 
 [Yuval Nirkin](http://www.nirkin.com/), [Iacopo Masi](http://www-bcf.usc.edu/~iacopoma/), [Anh Tuan Tran](https://sites.google.com/site/anhttranusc/), [Tal Hassner](http://www.openu.ac.il/home/hassner/), and [Gerard Medioni](http://iris.usc.edu/people/medioni/index.html).

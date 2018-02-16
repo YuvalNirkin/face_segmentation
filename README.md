@@ -27,7 +27,7 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 - Add "bin" in the installation directory to path.
 
 ## Usage
-- For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/projects/face_segmentation/).
+- For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/docs/face_segmentation/).
 - For python go to "interfaces/python" in the installation directory and run:
 ```BASH
 python face_seg.py

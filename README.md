@@ -10,7 +10,7 @@ The network was trained on IARPA Janus CS2 dataset (excluding subjects that are 
 
 If you find this code useful, please make sure to cite our paper in your work:
 
-Yuval Nirkin, Iacopo Masi, Anh Tuan Tran, Tal Hassner, Gerard Medioni, "[On Face Segmentation, Face Swapping, and Face Perception](https://arxiv.org/abs/1704.06729)", arXiv preprint arXiv:1704.06729, 22 Apr 2017
+Yuval Nirkin, Iacopo Masi, Anh Tuan Tran, Tal Hassner, Gerard Medioni, "[On Face Segmentation, Face Swapping, and Face Perception](https://arxiv.org/abs/1704.06729)", IEEE Conference on Automatic Face and Gesture Recognition (FG), Xi'an, China on May 2018
 
 Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/) for more details, more resources and updates on this project.
 

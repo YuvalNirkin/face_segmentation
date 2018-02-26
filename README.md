@@ -53,6 +53,18 @@ Note: The segmentation model was trained by cropping the training images using [
 ## Important note
 In our paper we used a different network for our face segmentation. In the process of converting it to the Caffe model used in our [end-to-end face swap distribution](https://github.com/YuvalNirkin/face_swap) we notices some performance drop. We are working to fix this. We therefore ask that you please check here soon for updated on this Caffe model. 
 
+## Citation
+
+Please cite our paper with the following bibtex if you use our face segmentation network:
+
+``` latex
+@inproceedings{nirkin2018_faceswap,
+      title={On Face Segmentation, Face Swapping, and Face Perception},
+      booktitle = {IEEE Conference on Automatic Face and Gesture Recognition},
+      author={Nirkin, Yuval and Masi, Iacopo and Tran, Anh Tuan and Hassner, Tal and Medioni, and G\'{e}rard Medioni},
+      year={2018},
+    }
+```
 
 ## Related projects
 - [End-to-end, automatic face swapping pipeline](https://github.com/YuvalNirkin/face_swap), example application using out face segmentation method.

@@ -48,7 +48,7 @@ cd path/to/face_segmentation/bin
 face_seg_batch img_list.txt -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
 ```
 
-Note: The segmentation model was trained by cropping the training images using [find_face_landmarks](https://github.com/YuvalNirkin/find_face_landmarks). For best results crop the input images the same way. A Matlab function is available [here](https://github.com/YuvalNirkin/find_face_landmarks/blob/master/interfaces/matlab/bbox_from_landmarks.m).
+Note: The segmentation model was trained by cropping the training images using [find_face_landmarks](https://github.com/YuvalNirkin/find_face_landmarks). For best results crop the input images the same way, with crop resolution below 350 X 350. A Matlab function is available [here](https://github.com/YuvalNirkin/find_face_landmarks/blob/master/interfaces/matlab/bbox_from_landmarks.m).
 
 ## Important note
 In our paper we used a different network for our face segmentation. In the process of converting it to the Caffe model used in our [end-to-end face swap distribution](https://github.com/YuvalNirkin/face_swap) we notices some performance drop. We are working to fix this. We therefore ask that you please check here soon for updated on this Caffe model. 

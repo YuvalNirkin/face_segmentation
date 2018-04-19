@@ -7,6 +7,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/regex.hpp>
+#include <boost/timer/timer.hpp>
 
 // OpenCV
 #include <opencv2/core.hpp>
@@ -77,7 +78,8 @@ int main(int argc, char* argv[])
     string inputPath;
 	string outputPath, modelPath, deployPath;
     string logPath, cfgPath;
-    unsigned int verbose;
+    unsigned int verbose, gpu_device_id;
+	bool scale, postprocess, with_gpu;
 	try {
 		options_description desc("Allowed options");
 		desc.add_options()
@@ -85,8 +87,12 @@ int main(int argc, char* argv[])
             ("verbose,v", value<unsigned int>(&verbose)->default_value(0), "output debug information")
             ("input,i", value<string>(&inputPath)->required(), "path to input directory or image list")
             ("output,o", value<string>(&outputPath)->required(), "output directory")
-            ("model,m", value<string>(&modelPath)->required(), "path to network weights model file  (.caffemodel)")
+            ("model,m", value<string>(&modelPath)->required(), "path to network weights model file (.caffemodel)")
             ("deploy,d", value<string>(&deployPath)->required(), "path to deploy prototxt file")
+			("scale,s", value<bool>(&scale)->default_value(true), "toggle scale image to network size")
+			("postprocess,p", value<bool>(&postprocess)->default_value(false), "toggle segmentation postprocessing")
+			("gpu", value<bool>(&with_gpu)->default_value(true), "toggle GPU / CPU")
+			("gpu_id", value<unsigned int>(&gpu_device_id)->default_value(0), "GPU's device id")
             ("log", value<string>(&logPath)->default_value("face_seg_batch_log.csv"), "log file path")
             ("cfg", value<string>(&cfgPath)->default_value("face_seg_batch.cfg"), "configuration file (.cfg)")
 			;
@@ -126,14 +132,20 @@ int main(int argc, char* argv[])
         if (verbose > 0)
             log.open(logPath);
 
+		// Initialize face segmentation
+		face_seg::FaceSeg fs(deployPath, modelPath, with_gpu, gpu_device_id, scale, postprocess);
+
+		// Initialize timer
+		boost::timer::cpu_timer timer;
+		float delta_time = 0.0f;
+		float total_time = 0.0f, fps = 0.0f;
+		int frame_counter = 0;
+
         // Parse images
         std::vector<string> img_paths;
         if (is_directory(inputPath))
             getImagesFromDir(inputPath, img_paths);
         else readImageListFromFile(inputPath, img_paths);
-
-		// Initialize face segmentation
-		face_seg::FaceSeg fs(deployPath, modelPath);
         
         // For each image
         string prev_src_path, prev_tgt_path;
@@ -153,6 +165,9 @@ int main(int argc, char* argv[])
 			// Read source image
             cv::Mat source_img = cv::imread(img_path);
 
+			// Start measuring time
+			timer.start();
+
 			// Do face segmentation
 			cv::Mat seg = fs.process(source_img);
 			if (seg.empty()) 
@@ -161,9 +176,22 @@ int main(int argc, char* argv[])
 				continue;
 			}
 
+			// Stop measuring time
+			timer.stop();
+
             // Write output to file
             std::cout << "Writing " << outputName << " to output directory." << std::endl;
             cv::imwrite(currOutputPath, seg);
+
+			// Print current fps
+			delta_time += (timer.elapsed().wall*1.0e-9 - delta_time)*0.1f;
+			fps = 1.0f / delta_time;
+			//total_time += (timer.elapsed().wall*1.0e-9);
+			//fps = (++frame_counter) / total_time;
+
+			/*std::cout << "total_time = " << total_time << std::endl;*/
+			std::cout << "delta_time = " << delta_time << std::endl;
+			std::cout << "fps = " << fps << std::endl;
 
             // Debug
             if (verbose > 0)

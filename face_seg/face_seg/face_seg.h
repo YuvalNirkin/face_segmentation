@@ -23,9 +23,12 @@ namespace face_seg
 			@param model_file Network weights model file (.caffemodel).
 			@param with_gpu Toggle GPU\CPU.
 			@param gpu_device_id Set the GPU's device id.
+			@param scale Scale image to the network's maximum size (depicted by the prototxt file).
+			@param postprocess_seg Toggle postprocessing of the segmentation.
 		*/
 		FaceSeg(const std::string& deploy_file, const std::string& model_file,
-            bool with_gpu = true, int gpu_device_id = 0);
+            bool with_gpu = true, int gpu_device_id = 0,
+			bool scale = true, bool postprocess_seg = false);
 
         ~FaceSeg();
 
@@ -62,6 +65,9 @@ namespace face_seg
         int m_num_channels;
         cv::Size m_input_size;
         bool m_with_gpu;
+		bool m_scale;
+		bool m_postprocess_seg;
+		int m_foreground_channel = 1;
 
 		// Mean pixel color
 		const float MB = 104.00699f, MG = 116.66877f, MR = 122.67892f;

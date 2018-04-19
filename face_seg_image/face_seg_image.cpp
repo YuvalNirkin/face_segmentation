@@ -28,7 +28,8 @@ int main(int argc, char* argv[])
 {
 	// Parse command line arguments
 	string inputPath, outputPath, modelPath, deployPath, cfgPath;
-    unsigned int verbose;
+    unsigned int verbose, gpu_device_id;
+	bool scale, postprocess, with_gpu;
 	try {
 		options_description desc("Allowed options");
 		desc.add_options()
@@ -38,6 +39,10 @@ int main(int argc, char* argv[])
 			("output,o", value<string>(&outputPath)->required(), "output segmentation path")
             ("model,m", value<string>(&modelPath)->required(), "path to network weights model file  (.caffemodel)")
             ("deploy,d", value<string>(&deployPath)->required(), "path to network definition file for deployment (.prototxt)")
+			("scale,s", value<bool>(&scale)->default_value(true), "toggle scale image to network size")
+			("postprocess,p", value<bool>(&postprocess)->default_value(false), "toggle segmentation postprocessing")
+			("gpu", value<bool>(&with_gpu)->default_value(true), "toggle GPU / CPU")
+			("gpu_id", value<unsigned int>(&gpu_device_id)->default_value(0), "GPU's device id")
             ("cfg", value<string>(&cfgPath)->default_value("face_seg_image.cfg"), "configuration file (.cfg)")
 			;
 		variables_map vm;
@@ -69,7 +74,7 @@ int main(int argc, char* argv[])
 	try
 	{
         // Initialize face segmentation
-		face_seg::FaceSeg fs(deployPath, modelPath);
+		face_seg::FaceSeg fs(deployPath, modelPath, with_gpu, gpu_device_id, scale, postprocess);
         
         // Read source image
         cv::Mat source_img = cv::imread(inputPath);

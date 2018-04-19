@@ -20,6 +20,16 @@ namespace face_seg
 	void renderSegmentationBlend(cv::Mat& img, const cv::Mat& seg, float alpha = 0.5f,
 		const cv::Scalar& color = cv::Scalar(0, 0, 255));
 
+	void removeSmallerComponents(cv::Mat& seg);
+
+	void smoothFlaws(cv::Mat& seg, int smooth_iterations = 1, int smooth_kernel_radius = 2);
+
+	void fillHoles(cv::Mat& seg);
+
+	void postprocessSegmentation(cv::Mat& seg, bool disconnected = true,
+		bool holes = true, bool smooth = true, int smooth_iterations = 1,
+		int smooth_kernel_radius = 2);
+
 }   // namespace face_seg
 
 #endif	// __FACE_SEG_UTILITIES__

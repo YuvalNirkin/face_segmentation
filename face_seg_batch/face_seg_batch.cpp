@@ -18,6 +18,12 @@
 #include <face_seg/face_seg.h>
 #include <face_seg/utilities.h>
 
+#if WITH_FIND_FACE_LANDMARKS
+// sfl
+#include <sfl/sequence_face_landmarks.h>
+#include <sfl/utilities.h>
+#endif	// WITH_FIND_FACE_LANDMARKS
+
 using std::cout;
 using std::endl;
 using std::cerr;
@@ -76,7 +82,7 @@ int main(int argc, char* argv[])
 {
 	// Parse command line arguments
     string inputPath;
-	string outputPath, modelPath, deployPath;
+	string outputPath, modelPath, deployPath, landmarks_path;
     string logPath, cfgPath;
     unsigned int verbose, gpu_device_id;
 	bool scale, postprocess, with_gpu;
@@ -93,6 +99,7 @@ int main(int argc, char* argv[])
 			("postprocess,p", value<bool>(&postprocess)->default_value(false), "toggle segmentation postprocessing")
 			("gpu", value<bool>(&with_gpu)->default_value(true), "toggle GPU / CPU")
 			("gpu_id", value<unsigned int>(&gpu_device_id)->default_value(0), "GPU's device id")
+			("landmarks,l", value<string>(&landmarks_path)->default_value(""), "path to landmarks model for face cropping")
             ("log", value<string>(&logPath)->default_value("face_seg_batch_log.csv"), "log file path")
             ("cfg", value<string>(&cfgPath)->default_value("face_seg_batch.cfg"), "configuration file (.cfg)")
 			;
@@ -118,6 +125,8 @@ int main(int argc, char* argv[])
             throw error("output must be a path to a directory!");
         if (!is_regular_file(modelPath)) throw error("model must be a path to a file!");
         if (!is_regular_file(deployPath)) throw error("deploy must be a path to a file!");
+		if (!landmarks_path.empty() && !is_regular_file(landmarks_path))
+			throw error("landmarks must be a path to a file!");
 	}
 	catch (const error& e) {
         cerr << "Error while parsing command-line arguments: " << e.what() << endl;
@@ -134,6 +143,13 @@ int main(int argc, char* argv[])
 
 		// Initialize face segmentation
 		face_seg::FaceSeg fs(deployPath, modelPath, with_gpu, gpu_device_id, scale, postprocess);
+
+#if WITH_FIND_FACE_LANDMARKS
+		// Initialize sequence face landmarks
+		std::shared_ptr<sfl::SequenceFaceLandmarks> _sfl;
+		if (!landmarks_path.empty())
+			_sfl = sfl::SequenceFaceLandmarks::create(landmarks_path);
+#endif	// WITH_FIND_FACE_LANDMARKS
 
 		// Initialize timer
 		boost::timer::cpu_timer timer;
@@ -164,6 +180,23 @@ int main(int argc, char* argv[])
 
 			// Read source image
             cv::Mat source_img = cv::imread(img_path);
+
+#if WITH_FIND_FACE_LANDMARKS
+			// Crop source image
+			if (_sfl != nullptr)
+			{
+				_sfl->clear();
+				const sfl::Frame& lmsFrame = _sfl->addFrame(source_img);
+				if (lmsFrame.faces.empty())
+				{
+					logError(log, img_path, "Failed to find a face in the image!", verbose);
+					continue;
+				}
+				const sfl::Face* face = lmsFrame.getFace(sfl::getMainFaceID(_sfl->getSequence()));
+				cv::Rect bbox = sfl::getFaceBBoxFromLandmarks(face->landmarks, source_img.size(), true);
+				source_img = source_img(bbox).clone();
+			}
+#endif	// WITH_FIND_FACE_LANDMARKS
 
 			// Start measuring time
 			timer.start();

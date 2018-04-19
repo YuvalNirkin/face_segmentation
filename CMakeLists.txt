@@ -25,6 +25,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Optional 3rd party components
 # ===================================================
 option(WITH_BOOST_STATIC "Boost static libraries" ON)
+option(WITH_FIND_FACE_LANDMARKS "Find Face Landmarks library" ON)
 
 # Build components
 # ===================================================
@@ -51,6 +52,12 @@ find_package(OpenCV REQUIRED highgui imgproc imgcodecs calib3d photo)
 
 # Caffe
 find_package(Caffe REQUIRED)
+
+# sfl
+if(WITH_FIND_FACE_LANDMARKS)
+	find_package(find_face_landmarks)
+	find_package(dlib)
+endif()
 
 # Doxygen
 find_package(Doxygen)

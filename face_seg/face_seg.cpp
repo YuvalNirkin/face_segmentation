@@ -46,21 +46,31 @@ namespace face_seg
 
 	cv::Mat FaceSeg::process(const cv::Mat& img)
 	{
+		cv::Mat img_scaled;
 		if (!m_scale)
 		{
+			// Enforce network maximum size
+			if (img.cols > m_input_size.width)
+			{
+				float scale = (float)m_input_size.width / (float)img.cols;
+				cv::resize(img, img_scaled, cv::Size(), scale, scale, cv::INTER_CUBIC);
+			}
+			else img_scaled = img;
+
 			// Reshape net
 			Blob<float>* input_layer = m_net->input_blobs()[0];
-			std::vector<int> shape = { 1, img.channels(), img.rows, img.cols };
+			std::vector<int> shape = { 1, img_scaled.channels(), img_scaled.rows, img_scaled.cols };
 			input_layer->Reshape(shape);
 
 			// Forward dimension change to all layers
 			m_net->Reshape();
 		}
+		else img_scaled = img;
 
 		// Prepare input data
 		std::vector<cv::Mat> input_channels;
 		wrapInputLayer(input_channels);
-		preprocess(img, input_channels);
+		preprocess(img_scaled, input_channels);
 
 		// Forward pass
 		m_net->Forward();

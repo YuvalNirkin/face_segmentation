@@ -15,6 +15,12 @@
 #include <face_seg/face_seg.h>
 #include <face_seg/utilities.h>
 
+#if WITH_FIND_FACE_LANDMARKS
+// sfl
+#include <sfl/sequence_face_landmarks.h>
+#include <sfl/utilities.h>
+#endif	// WITH_FIND_FACE_LANDMARKS
+
 
 using std::cout;
 using std::endl;
@@ -27,7 +33,7 @@ using namespace boost::filesystem;
 int main(int argc, char* argv[])
 {
 	// Parse command line arguments
-	string inputPath, outputPath, modelPath, deployPath, cfgPath;
+	string inputPath, outputPath, modelPath, deployPath, landmarks_path, cfgPath;
     unsigned int verbose, gpu_device_id;
 	bool scale, postprocess, with_gpu;
 	try {
@@ -43,6 +49,7 @@ int main(int argc, char* argv[])
 			("postprocess,p", value<bool>(&postprocess)->default_value(false), "toggle segmentation postprocessing")
 			("gpu", value<bool>(&with_gpu)->default_value(true), "toggle GPU / CPU")
 			("gpu_id", value<unsigned int>(&gpu_device_id)->default_value(0), "GPU's device id")
+			("landmarks,l", value<string>(&landmarks_path)->default_value(""), "path to landmarks model for face cropping")
             ("cfg", value<string>(&cfgPath)->default_value("face_seg_image.cfg"), "configuration file (.cfg)")
 			;
 		variables_map vm;
@@ -64,6 +71,8 @@ int main(int argc, char* argv[])
         if (!is_regular_file(inputPath)) throw error("input must be a path to an image!");
         if (!is_regular_file(modelPath)) throw error("model must be a path to a file!");
         if (!is_regular_file(deployPath)) throw error("deploy must be a path to a file!");
+		if (!landmarks_path.empty() && !is_regular_file(landmarks_path))
+			throw error("landmarks must be a path to a file!");
 	}
 	catch (const error& e) {
         cerr << "Error while parsing command-line arguments: " << e.what() << endl;
@@ -75,9 +84,30 @@ int main(int argc, char* argv[])
 	{
         // Initialize face segmentation
 		face_seg::FaceSeg fs(deployPath, modelPath, with_gpu, gpu_device_id, scale, postprocess);
+
+#if WITH_FIND_FACE_LANDMARKS
+		// Initialize sequence face landmarks
+		std::shared_ptr<sfl::SequenceFaceLandmarks> _sfl;
+		if (!landmarks_path.empty())
+			_sfl = sfl::SequenceFaceLandmarks::create(landmarks_path);
+#endif	// WITH_FIND_FACE_LANDMARKS
         
         // Read source image
         cv::Mat source_img = cv::imread(inputPath);
+
+#if WITH_FIND_FACE_LANDMARKS
+		// Crop source image
+		if (_sfl != nullptr)
+		{
+			_sfl->clear();
+			const sfl::Frame& lmsFrame = _sfl->addFrame(source_img);
+			if (lmsFrame.faces.empty())
+				throw std::runtime_error("Failed to find a face in the image!");
+			const sfl::Face* face = lmsFrame.getFace(sfl::getMainFaceID(_sfl->getSequence()));
+			cv::Rect bbox = sfl::getFaceBBoxFromLandmarks(face->landmarks, source_img.size(), true);
+			source_img = source_img(bbox).clone();
+		}
+#endif	// WITH_FIND_FACE_LANDMARKS
 
         // Do face segmentation
 		cv::Mat seg = fs.process(source_img);

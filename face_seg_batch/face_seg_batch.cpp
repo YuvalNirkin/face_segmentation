@@ -153,9 +153,7 @@ int main(int argc, char* argv[])
 
 		// Initialize timer
 		boost::timer::cpu_timer timer;
-		float delta_time = 0.0f;
-		float total_time = 0.0f, fps = 0.0f;
-		int frame_counter = 0;
+		float seg_delta_time = 0.0f, lms_delta_time = 0.0f;
 
         // Parse images
         std::vector<string> img_paths;
@@ -185,6 +183,9 @@ int main(int argc, char* argv[])
 			// Crop source image
 			if (_sfl != nullptr)
 			{
+				// Start measuring time
+				timer.start();
+
 				_sfl->clear();
 				const sfl::Frame& lmsFrame = _sfl->addFrame(source_img);
 				if (lmsFrame.faces.empty())
@@ -195,6 +196,14 @@ int main(int argc, char* argv[])
 				const sfl::Face* face = lmsFrame.getFace(sfl::getMainFaceID(_sfl->getSequence()));
 				cv::Rect bbox = sfl::getFaceBBoxFromLandmarks(face->landmarks, source_img.size(), true);
 				source_img = source_img(bbox).clone();
+
+				// Stop measuring time
+				timer.stop();
+
+				// Print current timing statistics
+				lms_delta_time += (timer.elapsed().wall*1.0e-9 - lms_delta_time)*0.1f;
+				std::cout << "Landmarks timing = " << lms_delta_time << "s (" << 
+					(1.0f / lms_delta_time) << " fps)" << std::endl;
 			}
 #endif	// WITH_FIND_FACE_LANDMARKS
 
@@ -216,15 +225,10 @@ int main(int argc, char* argv[])
             std::cout << "Writing " << outputName << " to output directory." << std::endl;
             cv::imwrite(currOutputPath, seg);
 
-			// Print current fps
-			delta_time += (timer.elapsed().wall*1.0e-9 - delta_time)*0.1f;
-			fps = 1.0f / delta_time;
-			//total_time += (timer.elapsed().wall*1.0e-9);
-			//fps = (++frame_counter) / total_time;
-
-			/*std::cout << "total_time = " << total_time << std::endl;*/
-			std::cout << "delta_time = " << delta_time << std::endl;
-			std::cout << "fps = " << fps << std::endl;
+			// Print current timing
+			seg_delta_time += (timer.elapsed().wall*1.0e-9 - seg_delta_time)*0.1f;
+			std::cout << "Segmentation timing = " << seg_delta_time << "s (" <<
+				(1.0f / seg_delta_time) << " fps)" << std::endl;
 
             // Debug
             if (verbose > 0)

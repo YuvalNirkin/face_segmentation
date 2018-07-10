@@ -5,7 +5,7 @@ COFW sample images segmented using our method.
 [Yuval Nirkin](http://www.nirkin.com/), [Iacopo Masi](http://www-bcf.usc.edu/~iacopoma/), [Anh Tuan Tran](https://sites.google.com/site/anhttranusc/), [Tal Hassner](http://www.openu.ac.il/home/hassner/), and [Gerard Medioni](http://iris.usc.edu/people/medioni/index.html).
 
 ## News (10/07/18)
-- New FCN model released for lower resolution images (300X300), trained without augmentations. Useful if you have limited GPU memory.
+- [New FCN model](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.1/face_seg_fcn8s_300_no_aug.zip) released for lower resolution images (300X300), trained without augmentations. Useful if you have limited GPU memory.
 - A better performing and more efficient U-Net model will be released soon, including training and inference scripts using PyTorch.  
 
 ## Overview
@@ -27,7 +27,7 @@ Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/
 
 ## Installation
 - Use CMake and your favorite compiler to build and install the library.
-- Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.0/face_seg_fcn8s.zip) and extract to "data" in the installation directory.
+- Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.0/face_seg_fcn8s.zip) or [face_seg_fcn8s_300_no_aug.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.1/face_seg_fcn8s_300_no_aug.zip) and extract to "data" in the installation directory.
 - Add "bin" in the installation directory to path.
 
 ## Usage

@@ -3,3 +3,8 @@
 .*
 !.gitignore
 build
+.vscode
+./data/*.caffemodel
+./data/*.prototxt
+*.caffemodel
+*.prototxt

@@ -16,46 +16,41 @@ If you find this code useful, please make sure to cite our paper in your work:
 
 Yuval Nirkin, Iacopo Masi, Anh Tuan Tran, Tal Hassner, Gerard Medioni, "[On Face Segmentation, Face Swapping, and Face Perception](https://arxiv.org/abs/1704.06729)", IEEE Conference on Automatic Face and Gesture Recognition (FG), Xi'an, China on May 2018
 
-Please see [project page](http://www.openu.ac.il/home/hassner/projects/faceswap/) for more details, more resources and updates on this project.
-
-## Dependencies
-| Library                                                            | Minimum Version | Notes                                    |
-|--------------------------------------------------------------------|-----------------|------------------------------------------|
-| [Boost](http://www.boost.org/)                                     | 1.47            |Optional - For command line tools         |
-| [OpenCV](http://opencv.org/)                                       | 3.0             |                                          |
-| [Caffe](https://github.com/BVLC/caffe)                             | 1.0             |☕️                                        |
-
 ## Installation
-- Use CMake and your favorite compiler to build and install the library.
-- Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.0/face_seg_fcn8s.zip) or [face_seg_fcn8s_300_no_aug.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.1/face_seg_fcn8s_300_no_aug.zip) and extract to "data" in the installation directory.
-- Add "bin" in the installation directory to path.
+Download the [face_seg_fcn8s.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.0/face_seg_fcn8s.zip) or [face_seg_fcn8s_300_no_aug.zip](https://github.com/YuvalNirkin/face_segmentation/releases/download/1.1/face_seg_fcn8s_300_no_aug.zip) and extract to "data" in the installation directory.
 
-## Usage
-- For using the library's C++ interface, please take a look at the [Doxygen generated documentation](https://yuvalnirkin.github.io/docs/face_segmentation/).
-- For python go to "interfaces/python" in the installation directory and run:
-```BASH
-python face_seg.py
+## Docker Inference
+
+build docker, then run it for inference. 
+
+`--input` argument can be a single image path or a directory path
+
+### GPU
+Build the docker image
+
 ```
-- For running the segmentation on a single image:
-```BASH
-cd path/to/face_segmentation/bin
-face_seg_image ../data/images/Alison_Lohman_0001.jpg -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+docker build -t face_segmentation:gpu .
 ```
-- For running the segmentation on all the images in a directory:
-```BASH
-cd path/to/face_segmentation/bin
-face_seg_batch ../data/images -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+Run the docker image
 ```
-- For running the segmentation on a list of images, first prepare a file "img_list.txt", in which each line is a path to an image and call the following command:
-```BASH
-cd path/to/face_segmentation/bin
-face_seg_batch img_list.txt -o . -m ../data/face_seg_fcn8s.caffemodel -d ../data/face_seg_fcn8s_deploy.prototxt
+nvidia-docker run -it -v /path/to/face_segmentation:/workspace/face_segmentation face_segmentation:gpu --input ./input
+```
+
+### CPU
+If you want build cpu version of docker, first go to `./Dockerfile`, comment first line and uncomment second line. 
+
+Build the docker image
+
+```
+docker build -t face_segmentation:cpu .
+```
+Run the docker image
+```
+docker run -it -v /path/to/face_segmentation:/workspace/face_segmentation face_segmentation:cpu --input ./input
 ```
 
 Note: The segmentation model was trained by cropping the training images using [find_face_landmarks](https://github.com/YuvalNirkin/find_face_landmarks). For best results crop the input images the same way, with crop resolution below 350 X 350. A Matlab function is available [here](https://github.com/YuvalNirkin/find_face_landmarks/blob/master/interfaces/matlab/bbox_from_landmarks.m).
 
-## Important note
-In our paper we used a different network for our face segmentation. In the process of converting it to the Caffe model used in our [end-to-end face swap distribution](https://github.com/YuvalNirkin/face_swap) we notices some performance drop. We are working to fix this. We therefore ask that you please check here soon for updated on this Caffe model. 
 
 ## Citation
 

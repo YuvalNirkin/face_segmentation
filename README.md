@@ -1,4 +1,7 @@
 # Deep face segmentation in extremely hard conditions
+
+[![Docker Image CI](https://github.com/SajjadAemmi/face_segmentation/actions/workflows/docker-image.yml/badge.svg)](https://github.com/SajjadAemmi/face_segmentation/actions/workflows/docker-image.yml)
+
 ![alt text](https://yuvalnirkin.github.io/assets/img/projects/face_segmentation/face_segmentation_teaser.jpg "Samples")  
 COFW sample images segmented using our method.
 
